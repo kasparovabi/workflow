@@ -1,0 +1,68 @@
+IR Sinyal Yakalayıcı - Devre Bağlantısı
+========================================
+
+MALZEME LİSTESİ:
+  - Arduino Uno/Nano
+  - IR Alıcı (TSOP1738 veya VS1838B - sensör kitinde var)
+  - IR LED (sensör kitinden VEYA eski kumandadan sök)
+  - 220 ohm direnç (IR LED için)
+  - 1x buton (opsiyonel - tekrar gönder butonu)
+  - Breadboard + jumper kablolar
+
+BAĞLANTI ŞEMASI:
+
+  Arduino Uno/Nano
+  ┌──────────────┐
+  │          GND ├───┬──────── IR Alıcı GND (sol bacak)
+  │           5V ├───│──┬───── IR Alıcı VCC (sağ bacak)
+  │              │   │  │
+  │        Pin 2 ├───│──│───── IR Alıcı OUT (orta bacak)
+  │              │   │  │
+  │        Pin 3 ├──[220Ω]──── IR LED (+) anot (uzun bacak)
+  │          GND ├───────────── IR LED (-) katot (kısa bacak)
+  │              │   │  │
+  │        Pin 4 ├───┤  │      Buton bir ucu
+  │          GND ├───┘  │      Buton diğer ucu
+  │              │      │      (dahili pull-up kullanılıyor)
+  │       Pin 13 │ (dahili LED - durum göstergesi)
+  └──────────────┘
+
+IR ALICI BACAK DİZİLİMİ (önden bakınca):
+  ┌─────┐
+  │  ○  │
+  └┤┤┤┘
+   │││
+   ││└── VCC (+5V)  [sağ]
+   │└─── OUT (Pin 2) [orta]
+   └──── GND         [sol]
+
+  * Not: Modele göre bacak dizilimi değişebilir!
+    TSOP1738: OUT, GND, VCC
+    VS1838B:  OUT, GND, VCC
+    Emin değilsen datasheet'e bak veya multimetre ile kontrol et.
+
+IR LED (eski kumandadan sökmek için):
+  1. Kumandanın vidasını sök veya klipsleri aç
+  2. Ön taraftaki saydam/koyu mor LED'i bul
+  3. Lehimi erit ve LED'i çıkar
+  4. Uzun bacak = anot (+), kısa bacak = katot (-)
+  5. Emin değilsen: 220 ohm + 3.3V ile test et,
+     telefon kamerasıyla bak (IR ışığı kamerada görünür!)
+
+MENZIL ARTIRMA İPUÇLARI:
+  - Kumandadan söktüğün IR LED genelde Arduino kitindekinden
+    daha güçlüdür (daha fazla akım çekebilir)
+  - 2-3 IR LED'i paralel bağlayarak menzili artırabilirsin
+  - Direnci 100 ohm'a düşürürsen daha parlak yanar
+    (ama LED'in ömrü kısalabilir)
+  - Alüminyum folyo ile arkasına reflektör yapabilirsin
+
+KURULUM:
+  1. Arduino IDE'yi aç
+  2. Sketch > Include Library > Manage Libraries
+  3. "IRremote" ara ve yükle (shirriff/IRremote)
+  4. ir_capture.ino dosyasını aç
+  5. Board ve port'u seç
+  6. Yükle
+  7. Serial Monitor'ü aç (115200 baud)
+  8. Kumandayı IR alıcıya doğrult ve tuşlara bas!
